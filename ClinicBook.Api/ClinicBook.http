@@ -1,0 +1,66 @@
+### ClinicBook API: M1 sample calls
+### Run the API first (dotnet run --project ClinicBook.Api), then click "Send Request" above each call.
+
+@baseUrl = http://localhost:5080
+
+### List all doctors (M1: JSON array)
+GET {{baseUrl}}/api/doctors
+Accept: application/json
+
+### Get one doctor by id
+GET {{baseUrl}}/api/doctors/1
+Accept: application/json
+
+### Get a doctor that does not exist (expect 404)
+GET {{baseUrl}}/api/doctors/9999
+Accept: application/json
+
+### Create a doctor (expect 201 + Location header)
+POST {{baseUrl}}/api/doctors
+Content-Type: application/json
+
+{
+  "fullName": "Dr. Aline Uwase",
+  "specialty": "Pediatrics",
+  "email": "aline.uwase@clinicbook.test",
+  "yearsOfExperience": 8
+}
+
+### Create an invalid doctor (expect 400 with "errors")
+POST {{baseUrl}}/api/doctors
+Content-Type: application/json
+
+{
+  "fullName": "Al",
+  "specialty": "",
+  "email": "not-an-email",
+  "yearsOfExperience": 99
+}
+
+### Update a doctor (expect 204, no body)
+PUT {{baseUrl}}/api/doctors/1
+Content-Type: application/json
+
+{
+  "fullName": "Dr. Aline Uwase",
+  "specialty": "Pediatrics",
+  "email": "aline.uwase@clinicbook.test",
+  "yearsOfExperience": 9
+}
+
+### Update a doctor that does not exist (expect 404)
+PUT {{baseUrl}}/api/doctors/9999
+Content-Type: application/json
+
+{
+  "fullName": "Dr. Nobody Here",
+  "specialty": "General",
+  "email": "nobody@clinicbook.test",
+  "yearsOfExperience": 1
+}
+
+### Delete a doctor (expect 204)
+DELETE {{baseUrl}}/api/doctors/1
+
+### Delete a doctor that does not exist (expect 404)
+DELETE {{baseUrl}}/api/doctors/9999
